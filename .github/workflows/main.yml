@@ -30,24 +30,15 @@ jobs:
 
       - name: Clone BPB workjs
         run: |
-          wget -O origin.js https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
-
-      - name: Obfuscate BPB worker js
+          wget -O worker-mw.js https://raw.githubusercontent.com/bia-pain-bache/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
+          mkdir -p build
+          zip -j build/unobfuscated-worker.zip ./worker-mw.js
+  
+      - name: Obfuscate JS
         run: |
-          javascript-obfuscator origin.js --output _worker.js \
-          --compact true \
-          --control-flow-flattening true \
-          --control-flow-flattening-threshold 1 \
-          --dead-code-injection true \
-          --dead-code-injection-threshold 1 \
-          --identifier-names-generator hexadecimal \
-          --rename-globals true \
-          --string-array true \
-          --string-array-encoding 'rc4' \
-          --string-array-threshold 1 \
-          --transform-object-keys true \
-          --unicode-escape-sequence true
-
+          npx javascript-obfuscator --config ./obfs-config.json ./worker-mw.js --output _worker.js
+          zip -j build/Obfuscate-worker.zip _worker.js		  
+          
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
