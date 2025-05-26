@@ -30,7 +30,7 @@ jobs:
 
       - name: Clone BPB workjs
         run: |
-          wget -O worker-mw.js https://raw.githubusercontent.com/xrw002/BPB-Worker-Panel/refs/heads/main/build/unobfuscated-worker.js
+          wget -O worker-mw.js https://github.com/xrw002/BPB-Worker-Panel/releases/download/v3.2.7/worker.js
           mkdir -p build
           zip -j build/unobfuscated-worker.zip ./worker-mw.js
   
